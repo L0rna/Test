@@ -1,6 +1,8 @@
 CREATE USER 'admin_ticketing'@'localhost' IDENTIFIED BY '';
+
 GRANT ALL PRIVILEGES ON *.* TO 'admin_ticketing'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
-
 DROP USER 'admin_ticketing'@'localhost';
+
+ALTER TABLE T_TICKET ADD CONSTRAINT TIC_ID FOREIGN KEY (ETAT_ID) REFERENCES T_ETAT(ETAT_ID);
