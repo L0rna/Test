@@ -13,10 +13,20 @@
             </header>
             <div id="contenu">
                 <?php
+                
                 $bdd = new PDO('mysql:host=localhost;dbname=monticketing;charset=utf8',
                         'monblog_user', 'motdepasse');
-                $tickets = $bdd->query('select * from T_TICKET inner join T_ETAT
+                        
+                $tickets = $bdd->query('select from T_TICKET inner join T_ETAT
                 ON T_ETAT.ETAT_ID = T_TICKET.ETAT_ID;');
+
+                $tickets = $bdd->query('Select TIC_ID as id, TIC_DATE as date,'
+                                . ' TIC_TITRE as titre, TIC_CONTENU as contenu, ETAT_ID as ETAT from T_TICKET'
+                                . ' order by TIC_ID desc');
+
+                $etats = $bdd->query('Select ETAT_LIB as lib, ETAT_CODE as code from T_ETAT'
+                                . ' order by _ID desc');
+                
                 foreach ($tickets as $ticket):
                     ?>
                     <article>
@@ -27,7 +37,17 @@
                         <p><?= $ticket['contenu'] ?></p>
                     </article>
                     <hr />
-                <?php endforeach; ?>
+                <?php endforeach; 
+                foreach ($etats as $etat):
+                    ?>
+                    <article>
+                        <header>
+                            <h1 class="titreTicket"><?= $etat['code'] ?></h1>
+                        </header>
+                        <p><?= $etat['lib'] ?></p>
+                    </article>
+                    <?php endforeach; 
+                ?>
             </div> <!-- #contenu -->
             <footer id="piedBlog">
                 TICKET réalisé avec PHP, HTML5 et CSS.
