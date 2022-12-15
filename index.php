@@ -15,9 +15,8 @@
                 <?php
                 $bdd = new PDO('mysql:host=localhost;dbname=monticketing;charset=utf8',
                         'monblog_user', 'motdepasse');
-                $tickets = $bdd->query('select TIC_ID as id, TIC_DATE as date,'
-                        . ' TIC_TITRE as titre, TIC_CONTENU as contenu, ETAT_ID as ETAT from T_TICKET'
-                        . ' order by TIC_ID desc');
+                $tickets = $bdd->query('select * from T_TICKET inner join T_ETAT
+                ON T_ETAT.ETAT_ID = T_TICKET.ETAT_ID;');
                 foreach ($tickets as $ticket):
                     ?>
                     <article>
